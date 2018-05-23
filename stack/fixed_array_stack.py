@@ -23,6 +23,8 @@ class FixedArrayStack:
         return self.stack[old_index]
 
     def top(self):
+        if self.is_empty():
+            raise Exception('Stack Underflow')
         return self.stack[self.head]
 
     def size(self):
