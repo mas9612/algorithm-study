@@ -2,9 +2,8 @@
 
 using namespace std;
 
-class Node
-{
-public:
+class Node {
+   public:
     int key;
 
     Node* parent;
@@ -14,8 +13,7 @@ public:
     Node(int key) : key(key), parent(NULL), left(NULL), right(NULL) {}
 };
 
-Node* minimum(Node* root)
-{
+Node* minimum(Node* root) {
     if (root == NULL)
         return NULL;
 
@@ -25,8 +23,7 @@ Node* minimum(Node* root)
     return node;
 }
 
-Node* maximum(Node* root)
-{
+Node* maximum(Node* root) {
     if (root == NULL)
         return NULL;
 
@@ -36,8 +33,7 @@ Node* maximum(Node* root)
     return node;
 }
 
-Node* find_node(Node* node, int key)
-{
+Node* find_node(Node* node, int key) {
     if (node == NULL)
         return NULL;
 
@@ -53,8 +49,7 @@ Node* find_node(Node* node, int key)
     return NULL;
 }
 
-void preorder(Node* root)
-{
+void preorder(Node* root) {
     if (root == NULL)
         return;
 
@@ -63,8 +58,7 @@ void preorder(Node* root)
     preorder(root->right);
 }
 
-void inorder(Node* root)
-{
+void inorder(Node* root) {
     if (root == NULL)
         return;
 
@@ -73,8 +67,7 @@ void inorder(Node* root)
     inorder(root->right);
 }
 
-void postorder(Node* root)
-{
+void postorder(Node* root) {
     if (root == NULL)
         return;
 
@@ -83,8 +76,7 @@ void postorder(Node* root)
     cout << ' ' << root->key;
 }
 
-Node* successor(Node* node)
-{
+Node* successor(Node* node) {
     if (node == NULL)
         return NULL;
 
@@ -100,11 +92,26 @@ Node* successor(Node* node)
     return target;
 }
 
-void insert_node(Node** root, int key)
-{
+Node* predecessor(Node* node) {
+    if (node == NULL)
+        return NULL;
+
+    if (node->left != NULL)
+        return maximum(node->left);
+
+    Node* target = node->parent;
+    Node* tmp = node;
+    while (target != NULL && target->left == tmp) {
+        tmp = tmp->parent;
+        target = target->parent;
+    }
+    return target;
+}
+
+void insert_node(Node** root, int key) {
     Node* new_node = new Node(key);
 
-    if (*root == NULL) { // tree is empty
+    if (*root == NULL) {  // tree is empty
         *root = new_node;
         return;
     }
@@ -126,8 +133,7 @@ void insert_node(Node** root, int key)
         parent->right = new_node;
 }
 
-void _delete_node(Node* target)
-{
+void _delete_node(Node* target) {
     if (target->left == NULL && target->right == NULL) {
         if (target->parent->left == target)
             target->parent->left = NULL;
@@ -158,8 +164,7 @@ void _delete_node(Node* target)
     }
 }
 
-void delete_node(Node** root, int key)
-{
+void delete_node(Node** root, int key) {
     if (*root == NULL)
         return;
 
@@ -170,8 +175,7 @@ void delete_node(Node** root, int key)
     _delete_node(target);
 }
 
-int main()
-{
+int main() {
     Node* root = NULL;
 
     insert_node(&root, 6);
